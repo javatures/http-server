@@ -2,24 +2,19 @@
 
 case $1 in
 clean)
-    rm App.jar App.class
+    rm -f target/classes/*.class 
+    rm -f target/App.jar
     ;;
 
 build)
-    javac App.java
+    javac -cp src -d target/classes src/App.java
     ;;
 
 package)
-    jar -cfe App.jar App App.class
+    jar -cfe target/App.jar App target/classes/*.class
     ;;
 
 run)
-    java App
-    ;;
-
-*)
-    javac App.java
-    jar -cfe App.jar App App.class
-    java App
+    java -cp target/classes/ App
     ;;
 esac
