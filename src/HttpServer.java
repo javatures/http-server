@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.io.Reader;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -32,34 +33,51 @@ public class HttpServer {
     }
 
     /**
-     * handle method will take a Socket and print the incoming message and send back a Hello World.
+     * handle method will take a Socket and print the incoming message and send back
+     * a Hello World.
      * 
      * @param client Incoming Socket
      */
     private void handle(Socket client) {
         try {
-            InputStream input = client.getInputStream();
-            OutputStream output = client.getOutputStream();
+            BufferedReader input = new BufferedReader(new InputStreamReader(client.getInputStream()));
+            PrintWriter output = new PrintWriter(client.getOutputStream());
 
-            // Read request through BufferedReader
-            BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                System.out.println(line);
-            }
+            parse(input);
 
             // Text to send back
             String body = "Hello World";
 
-            // Print response through PrintWriter
-            PrintWriter writer = new PrintWriter(output, true);
-            writer.println("HTTP/1.1 200 OK");
-            writer.println("Content-Length: " + body.length());
-            writer.println("Content-Type: text/plain");
-            writer.println();
-            writer.println(body);
+            send(output, body);
         } catch (IOException ex) {
             System.err.println("Handling oops!");
         }
+    }
+
+    /**
+     * parse will take an inputstream from a Socket connection and do something with
+     * it
+     * 
+     * @param input
+     * @throws IOException
+     */
+    public void parse(BufferedReader reader) throws IOException {
+        // Read request through BufferedReader
+        String line = "";
+        while (reader.ready()) {
+            while ((line = reader.readLine()).length() != 0) {
+                System.out.println(line);
+            }
+        }
+    }
+
+    public void send(PrintWriter output, String body) {
+        // Print response through PrintWriter
+        PrintWriter writer = new PrintWriter(output, true);
+        writer.println("HTTP/1.1 200 OK");
+        writer.println("Content-Length: " + body.length());
+        writer.println("Content-Type: text/plain");
+        writer.println();
+        writer.println(body);
     }
 }
