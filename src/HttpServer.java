@@ -64,8 +64,8 @@ public class HttpServer {
     public void parse(BufferedReader reader) throws IOException {
         // Read request through BufferedReader
         String line = "";
-        while (reader.ready()) {
-            while ((line = reader.readLine()).length() != 0) {
+        while (reader.ready() && line != null) {
+            while ((line = reader.readLine()) != null && line.length() != 0) {
                 System.out.println(line);
             }
         }

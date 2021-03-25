@@ -4,21 +4,22 @@ import java.io.PrintWriter;
 import java.io.StringReader;
 
 public class HttpServerTest {
-    HttpServer testServer;
 
-    public static void main(String[] args) throws IOException {
-        HttpServerTest test = new HttpServerTest();
-        test.testServer = new HttpServer(8080);
-        test.testParse();
-        test.testSend();
-    }
-
+    @Test
     public void testParse() throws IOException {
-        String request = "GET / HTTP/1.1\r\nHost: localhost:8080\r\n";
+        HttpServer testServer = new HttpServer(8080);
+        String request = "GET / HTTP/1.1\nHost: localhost:8080";
         testServer.parse(new BufferedReader(new StringReader(request)));
     }
 
+    @Test
     public void testSend() {
+        HttpServer testServer = new HttpServer(8081);
         testServer.send(new PrintWriter(System.out), "Hello");
+    }
+
+    @Test
+    public void blah() {
+        
     }
 }
