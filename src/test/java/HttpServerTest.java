@@ -3,6 +3,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringReader;
 
+import org.junit.jupiter.api.Test;
+
 public class HttpServerTest {
 
     @Test
@@ -20,6 +22,11 @@ public class HttpServerTest {
 
     @Test
     public void blah() {
+        
+    }
+
+    @Test
+    public void foobar() {
         
     }
 }
