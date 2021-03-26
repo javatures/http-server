@@ -5,7 +5,7 @@ A jank example of an implementation of HTTP client-server communication.
 - [x] Can server HTTP request and response
     - [x] Can print incoming HTTP requests
     - [ ] Can parse HTTP requests
-        - [ ] Parse request line (i.e. GET / HTTP/1.1)
+        - [x] Parse request line (i.e. GET / HTTP/1.1)
         - [ ] Parse HTTP headers (i.e. Host: localhost:8080)
     - [ ] Can return HTTP response
         - [ ] Respond with HTML welcome page
